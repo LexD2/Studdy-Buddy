@@ -6,17 +6,119 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weekly Schedule</title>
   <link rel="stylesheet" href="schedule.css">
-  <script defer src="schedule.js"></script>
+  <script src="schedule.js"></script>
+  
+  
+  <link rel="stylesheet" href="./timetable.js-master/dist/styles/timetablejs.css">
+  <link rel="stylesheet" href="./timetable.js-master/dist/styles/demo.css">
+  <!--<script src="timetable.min.js"></script> -->
 </head>
 <body>
-   
-
     <h1>Weekly Schedule</h1>
     <button class="button current_page">Home</button>
     <button class="button navigate">Calender<br />view monthly calender</button>
     <button class="button navigate">Study Help<br />go to the Q&A form</button>
     <button class="button navigate">Assignments</button>
-    <div class="schedule_container">
+    <!--<input type="date" id='date'/>
+    <input type="time" id='starttime'/>
+    <input type="time" id='endtime'/> -->
+
+    <p>Enter an event to the timetable:</p>
+    <input type ="radio" id="monday" name="day_of_week" value="Monday"><label for="monday">Monday</label>
+    <input type ="radio" id="tuesday" name="day_of_week" value="Tuesday"><label for="tuesday">Tuesday</label>
+    <input type ="radio" id="wednesday" name="day_of_week" value="Wednesday"><label for="wednesday">Wednesday</label>
+    <input type ="radio" id="thursday" name="day_of_week" value="Thursday"><label for="thursday">Thursday</label>
+    <input type ="radio" id="friday" name="day_of_week" value="Friday"><label for="friday">Friday</label>
+    <input type ="radio" id="saturday" name="day_of_week" value="Saturday"><label for="saturday">Saturday</label>
+    <input type ="radio" id="sunday" name="day_of_week" value="Sunday"><label for="sunday">Sunday</label>
+    <br>
+    <label for="eventname">Event name:</label>
+    <input type="text" id="eventname" name="eventname"><br>
+    <label for="starthour">Start: Hour</label>
+    <input type="number" id="starthour" name="starthour" min="1" max="12">
+    <label for="startminute">Minute</label>
+    <input type="number" id="startminute" name="startminute" min="0" max="59">
+    <br>
+    <label for="endhour">End: Hour</label>
+    <input type="number" id="endhour" name="endhour" min="1" max="12">
+    <label for="endminute">Minute</label>
+    <input type="number" id="endminute" name="endminute" min="0" max="59">
+    <br>
+
+    <button id="btn" type="submit">Submit</button>
+    <!--<button>Add</button> -->
+    <div class="timetable"></div>
+
+    <script src="./timetable.js-master/dist/scripts/timetable.js"></script>
+   
+   <script>
+        var timetable = new Timetable();
+        timetable.useTwelveHour();
+        timetable.setScope(8,3)
+
+        timetable.addLocations(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
+        /**/
+        timetable.addEvent('Demo', 'Sunday', new Date(2015,7,17,9,00), new Date(2015,7,17,11,30), { url: '#' });
+        timetable.addEvent('Demo', 'Monday', new Date(2015,7,17,12), new Date(2015,7,17,13), { url: '#' });
+        timetable.addEvent('Demo', 'Monday', new Date(2015,7,17,13,30), new Date(2015,7,17,15), { url: '#' });
+        timetable.addEvent('Lasergaming', 'Wednesday', new Date(2015,7,17,17,45), new Date(2015,7,17,19,30), { class: 'vip-only', data: { maxPlayers: 14, gameType: 'Capture the flag' } });
+        timetable.addEvent('Demo', 'Thursday', new Date(2015,7,17,21), new Date(2015,7,18,1,30), { url: '#' });
+        timetable.addEvent('Demo', 'Saturday', new Date(2015,7,17,11,30), new Date(2015,7,17,20)); // options attribute is not used for this event
+        timetable.addEvent('Tokyo Hackathon Livestream', 'Tuesday', new Date(2015,7,17,12,30), new Date(2015,7,17,16,15)); // options attribute is not used for this event
+        timetable.addEvent('Lunch', 'Friday', new Date(2015,7,17,9,30 ), new Date(2015,7,17,11,45), { onClick: function(event) {
+  window.alert('You clicked on the ' + event.name + ' event in ' + event.location + '. This is an example of a click handler');
+}});
+        timetable.addEvent('Cocktails', 'Sunday', new Date(2015,7,18,00,00), new Date(2015,7,18,02,00), { class: 'vip-only' });
+         
+        timetable.addEvent('Tokyo Hackathon Livestream', 'Tuesday', new Date(2015,7,17,12,30), new Date(2015,7,17,18,30));
+
+       
+
+        var renderer = new Timetable.Renderer(timetable);
+        renderer.draw('.timetable');
+
+        /*
+        var eName = document.getElementById("eventname");
+        var day = document.getElementById("day_of_week");
+        var startHour = document.getElementById("starthour");
+        var startMinute = document.getElementById("startminute");
+        var endHour = document.getElementById("endhour");
+        var endMinute = document.getElementById("endminute");
+        
+        document.querySelector("submit").onClick = function() {
+            
+        
+        } */
+
+        const btn = document.getElementById('btn');
+        btn.addEventListener('click', function handleClick(event) {
+            //  if you are submitting a form (prevents page reload)
+            event.preventDefault();
+
+            const eventNameInput = document.getElementById('eventname');
+
+            
+            //testing to dynamicaly add events
+            timetable.addEvent(eventNameInput.value, 'Wednesday', new Date(2015,7,17,9,00), new Date(2015,7,17,11,30), { url: '#' });
+
+            //  clear input field
+            eventNameInput.value = '';
+            var renderer = new Timetable.Renderer(timetable);
+            renderer.draw('.timetable');
+        });
+
+
+        
+
+   </script>
+   
+   
+   
+    
+    <!--<p id="demo"></p> -->
+
+   
+   <!-- <div class="schedule_container">
         <div class="header">
             <ul class = "days">
                 <li>Sunday</li>
@@ -68,7 +170,34 @@
             </ul>
         </div>
         
-    </div>
+        <div class="event-container">   
+
+           <-- <div class="slot slot-1">
+                <div class="event-status"></div>
+                <span>event a</span>
+            </div>
+    
+            <div class="slot slot-2">
+                <div class="event-status"></div>
+                <span>event b</span>
+            </div>
+    
+            <div class="slot slot-3">
+                <div class="event-status"></div>
+                <span>event c</span>
+            </div>
+    
+            <div class="slot slot-4">
+                <div class="event-status"></div>
+                <span>event d</span>
+            </div> --
+    
+        </div> 
+
+
+
+
+    </div> -->
 
 </body>
 </html>
