@@ -6,3 +6,7 @@ from django.shortcuts import render, HttpResponse
 def login_page(request):
     return render(request, 'login_page.html')
 
+
+def schedule(request):
+    return render(request, 'schedule.html')
+

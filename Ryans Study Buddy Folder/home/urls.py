@@ -4,6 +4,7 @@ from home import views
 
 
 urlpatterns = [
-    path('', views.login_page, name='login_page')
+    path('schedule/', views.schedule, name='schedule'),
+    path('', views.login_page, name='login_page'),
 ]
 

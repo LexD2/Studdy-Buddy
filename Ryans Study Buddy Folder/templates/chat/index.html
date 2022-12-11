@@ -2,16 +2,25 @@
 <!-- This will be the main area for people to enter chat rooms
      I want to create a bunch of buttons to enter certain rooms-->
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Rooms</title>
-</head>
+{% extends 'base.html' %}
+
+{% block title %}Chat Connect{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
 <body>
     What chat room would you like to enter?<br>
+    Popular chat rooms (Case-sensitive): <br>
+        - Lobby <br>
+        - Math <br>
+        - History <br>
+        - Science <br>
+        - English <br>
+        - Arts <br>
+        - Music <br>
+        - Other <br>
     <input id="room-name-input" type="text" size="100"><br>
-    <input id="room-name-submit" type="button" value="Enter">
+    <input id="room-name-submit" type="button" value="Connect">
 
     <script>
         document.querySelector('#room-name-input').focus();
@@ -27,4 +36,10 @@
         };
     </script>
 </body>
-</html>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+  <p>New member?</p>
+  <a href="{% url 'signup' %}">Signup</a>
+{% endif %}
+{% endblock %}

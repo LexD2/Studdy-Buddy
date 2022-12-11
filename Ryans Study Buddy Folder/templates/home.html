@@ -10,5 +10,7 @@
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">Log In</a>
+  <p>New member?</p>
+  <a href="{% url 'signup' %}">Signup</a>
 {% endif %}
 {% endblock %}
