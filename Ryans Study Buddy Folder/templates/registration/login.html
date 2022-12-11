@@ -4,10 +4,12 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
+<div class="mx-auto" style="width: 800px;">
 <h2>Log In</h2>
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Log In</button>
 </form>
+</div>
 {% endblock %}

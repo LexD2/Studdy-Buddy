@@ -4,13 +4,18 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+<div class="mx-auto" style="width: 800px;">
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  <p><a href="{% url 'logout' %}">Log Out</a></p>
+
+    <h2>Hi {{ user.username }}! Welcome to Study Buddy</h2>
+    <p>You may access your schedule or connect to chat</p>
+    <p><a href="{% url 'logout' %}">Log Out</a></p>
+
 {% else %}
-  <p>You are not logged in</p>
+  <h2>You are not logged in</h2>
   <a href="{% url 'login' %}">Log In</a>
   <p>New member?</p>
   <a href="{% url 'signup' %}">Signup</a>
 {% endif %}
+  </div>
 {% endblock %}
